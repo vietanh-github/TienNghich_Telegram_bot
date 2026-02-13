@@ -26,11 +26,11 @@ async def admin_dashboard_command(update: Update, context: ContextTypes.DEFAULT_
 
     keyboard = [
         [
-            InlineKeyboardButton(f"{EMOJI_ADMIN} Thống kê", callback_data="admin_stats"),
-            InlineKeyboardButton(f"{EMOJI_PENDING} Duyệt bài", callback_data="admin_pending")
+            InlineKeyboardButton(f"{EMOJI_ADMIN} Sổ Nam Tào", callback_data="admin_stats"),
+            InlineKeyboardButton(f"{EMOJI_PENDING} Thẩm định", callback_data="admin_pending")
         ],
         [
-            InlineKeyboardButton("📢 Thông báo Users", callback_data="admin_broadcast_users")
+            InlineKeyboardButton("📢 Truyền âm toàn server", callback_data="admin_broadcast_users")
         ],
         [
             InlineKeyboardButton("❌ Đóng", callback_data="admin_close")
@@ -39,7 +39,7 @@ async def admin_dashboard_command(update: Update, context: ContextTypes.DEFAULT_
     reply_markup = InlineKeyboardMarkup(keyboard)
     
     await update.message.reply_text(
-        f"{EMOJI_ADMIN} **ADMIN DASHBOARD**\n\nChọn chức năng:",
+        f"{EMOJI_ADMIN} **CHƯỞNG MÔN ĐẠI ĐIỆN**\n\nChọn chức năng:",
         reply_markup=reply_markup,
         parse_mode='Markdown'
     )
@@ -92,7 +92,7 @@ async def add_admin_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
         if user_service.set_admin_status(new_admin_id, True):
              await update.message.reply_text(f"{EMOJI_CHECK} Đã thêm user `{new_admin_id}` ({user.username}) làm Admin.", parse_mode='Markdown')
         else:
-             await update.message.reply_text(f"{EMOJI_CROSS} Có lỗi xảy ra khi thêm admin.")
+             await update.message.reply_text(f"{EMOJI_CROSS} Tâm ma quấy nhiễu khi thêm hộ pháp.")
              
     except ValueError:
         await update.message.reply_text(f"{EMOJI_CROSS} ID không hợp lệ.")
@@ -123,7 +123,7 @@ async def remove_admin_command(update: Update, context: ContextTypes.DEFAULT_TYP
         if user_service.set_admin_status(target_id, False):
              await update.message.reply_text(f"{EMOJI_CHECK} Đã xóa quyền Admin của user `{target_id}`.", parse_mode='Markdown')
         else:
-             await update.message.reply_text(f"{EMOJI_CROSS} Có lỗi xảy ra khi xóa admin.")
+             await update.message.reply_text(f"{EMOJI_CROSS} Tâm ma quấy nhiễu khi xóa hộ pháp.")
              
     except ValueError:
         await update.message.reply_text(f"{EMOJI_CROSS} ID không hợp lệ.")
@@ -177,7 +177,7 @@ async def admin_stats_command(update: Update, context: ContextTypes.DEFAULT_TYPE
     except Exception as e:
         print(f"Error in admin_stats_command: {e}")
         await update.message.reply_text(
-            f"{EMOJI_CROSS} Lỗi khi lấy thống kê."
+            f"{EMOJI_CROSS} Tâm ma quấy nhiễu khi xem Sổ Nam Tào."
         )
 
 
@@ -219,7 +219,7 @@ async def admin_pending_command(update: Update, context: ContextTypes.DEFAULT_TY
     except Exception as e:
         print(f"Error in admin_pending_command: {e}")
         await update.message.reply_text(
-            f"{EMOJI_CROSS} Lỗi khi lấy danh sách đóng góp."
+            f"{EMOJI_CROSS} Tâm ma quấy nhiễu khi lấy danh sách cống hiến."
         )
 
 
@@ -269,7 +269,7 @@ async def admin_review_command(update: Update, context: ContextTypes.DEFAULT_TYP
     except Exception as e:
         print(f"Error in admin_review_command: {e}")
         await update.message.reply_text(
-            f"{EMOJI_CROSS} Lỗi khi xem chi tiết đóng góp."
+            f"{EMOJI_CROSS} Tâm ma quấy nhiễu khi xem chi tiết."
         )
 
 
@@ -313,8 +313,8 @@ async def admin_approve_command(update: Update, context: ContextTypes.DEFAULT_TY
             try:
                 await context.bot.send_message(
                     chat_id=contribution.user_id,
-                    text=f"{EMOJI_CHECK} Đóng góp của bạn đã được admin phê duyệt!\n\n"
-                         f"Cảm ơn bạn đã đóng góp cho cộng đồng! 🎉"
+                    text=f"{EMOJI_CHECK} Cống hiến của đạo hữu đã được chưởng môn phê duyệt!\n\n"
+                         f"Đa tạ đạo hữu đã cống hiến cho tông môn! 🎉"
                 )
             except Exception as e:
                 print(f"Error notifying contributor: {e}")
@@ -322,7 +322,7 @@ async def admin_approve_command(update: Update, context: ContextTypes.DEFAULT_TY
     except Exception as e:
         print(f"Error in admin_approve_command: {e}")
         await update.message.reply_text(
-            f"{EMOJI_CROSS} Lỗi khi duyệt đóng góp."
+            f"{EMOJI_CROSS} Tâm ma quấy nhiễu khi thẩm định."
         )
 
 
@@ -366,8 +366,8 @@ async def admin_reject_command(update: Update, context: ContextTypes.DEFAULT_TYP
             try:
                 await context.bot.send_message(
                     chat_id=contribution.user_id,
-                    text=f"{EMOJI_CROSS} Đóng góp của bạn đã bị từ chối.\n\n"
-                         f"Vui lòng kiểm tra lại thông tin và đóng góp lại nếu cần."
+                    text=f"{EMOJI_CROSS} Cống hiến của đạo hữu đã bị từ chối.\n\n"
+                         f"Xin đạo hữu kiểm tra lại manh mối và cống hiến lại nếu cần."
                 )
             except Exception as e:
                 print(f"Error notifying contributor: {e}")
@@ -375,7 +375,7 @@ async def admin_reject_command(update: Update, context: ContextTypes.DEFAULT_TYP
     except Exception as e:
         print(f"Error in admin_reject_command: {e}")
         await update.message.reply_text(
-            f"{EMOJI_CROSS} Lỗi khi từ chối đóng góp."
+            f"{EMOJI_CROSS} Tâm ma quấy nhiễu khi từ chối."
         )
 
 
@@ -385,7 +385,7 @@ async def handle_admin_callback(update: Update, context: ContextTypes.DEFAULT_TY
     await query.answer()
     
     if not is_admin(update.effective_user.id):
-        await query.edit_message_text(f"{EMOJI_CROSS} Bạn không có quyền thực hiện hành động này.")
+        await query.edit_message_text(f"{EMOJI_CROSS} Đạo hữu không có quyền thực hiện hành động này.")
         return
 
     data = query.data
@@ -457,8 +457,8 @@ async def handle_admin_callback(update: Update, context: ContextTypes.DEFAULT_TY
     
     if data == "admin_broadcast_users":
         await query.message.reply_text(
-            f"{EMOJI_ADMIN} **GỬI THÔNG BÁO CHO TOÀN BỘ USERS**\n\n"
-            f"Vui lòng nhập nội dung tin nhắn muốn gửi (hoặc gửi /cancel để hủy):",
+            f"{EMOJI_ADMIN} **TRUYỀN ÂM TOÀN SERVER**\n\n"
+            f"Vui lòng nhập nội dung truyền âm (hoặc gửi /cancel để hủy):",
             parse_mode='Markdown'
         )
         return BROADCAST_ASK_CONTENT
@@ -552,11 +552,11 @@ async def handle_admin_callback(update: Update, context: ContextTypes.DEFAULT_TY
             
             # Notify user
             if action.startswith("approve"):
-                notify_text = (f"{EMOJI_CHECK} Đóng góp của bạn đã được admin phê duyệt!\n\n"
-                               f"Cảm ơn bạn đã đóng góp cho cộng đồng! 🎉")
+                notify_text = (f"{EMOJI_CHECK} Cống hiến của đạo hữu đã được chưởng môn phê duyệt!\n\n"
+                               f"Đa tạ đạo hữu đã cống hiến cho tông môn! 🎉")
             else:
-                notify_text = (f"{EMOJI_CROSS} Đóng góp của bạn đã bị từ chối.\n\n"
-                               f"Vui lòng kiểm tra lại thông tin.")
+                notify_text = (f"{EMOJI_CROSS} Cống hiến của đạo hữu đã bị từ chối.\n\n"
+                               f"Xin đạo hữu kiểm tra lại manh mối.")
                                
             try:
                 await context.bot.send_message(
@@ -576,7 +576,7 @@ async def handle_admin_callback(update: Update, context: ContextTypes.DEFAULT_TY
         print(f"Error in handle_admin_callback: {e}")
         await context.bot.send_message(
             chat_id=update.effective_user.id,
-            text=f"{EMOJI_CROSS} Có lỗi xảy ra: {e}"
+            text=f"{EMOJI_CROSS} Tâm ma quấy nhiễu: {e}"
         )
 
 
@@ -600,7 +600,7 @@ async def admin_help_command(update: Update, context: ContextTypes.DEFAULT_TYPE)
 **Lưu ý:**
 • Thay `<ID>` bằng ID thực tế của đóng góp
 • Khi có đóng góp mới, bot sẽ tự động thông báo
-• Người đóng góp sẽ nhận thông báo khi đóng góp được duyệt/từ chối
+• Đạo hữu cống hiến sẽ nhận thông báo khi được duyệt/từ chối
 """
     
     await update.message.reply_text(
@@ -650,7 +650,7 @@ async def broadcast_confirm(update: Update, context: ContextTypes.DEFAULT_TYPE):
         
     content = context.user_data.get('broadcast_content')
     if not content:
-        await query.edit_message_text(f"{EMOJI_CROSS} Lỗi: Không tìm thấy nội dung.")
+        await query.edit_message_text(f"{EMOJI_CROSS} Thất bại: Không tìm thấy nội dung.")
         return ConversationHandler.END
         
     # Start broadcasting
@@ -664,7 +664,7 @@ async def broadcast_confirm(update: Update, context: ContextTypes.DEFAULT_TYPE):
         try:
             await context.bot.send_message(
                 chat_id=user.user_id,
-                text=f"{EMOJI_ADMIN} **THÔNG BÁO TỪ BQT**\n\n{content}",
+                text=f"{EMOJI_ADMIN} **TRUYỀN ÂM TỪ CHƯỞNG MÔN**\n\n{content}",
                 parse_mode='Markdown'
             )
             success_count += 1

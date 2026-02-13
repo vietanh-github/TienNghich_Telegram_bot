@@ -94,13 +94,13 @@ async def post_init(application: Application):
     # Set bot commands
     from telegram import BotCommand
     commands = [
-        BotCommand("start", "Bắt đầu sử dụng bot"),
-        BotCommand("chapter", "Tra cứu chương truyện"),
-        BotCommand("3d", "Tra cứu phim 3D"),
-        BotCommand("2d", "Tra cứu phim 2D"),
-        BotCommand("contribute", "Đóng góp thông tin"),
-        BotCommand("list", "Danh sách đã đóng góp"),
-        BotCommand("help", "Xem hướng dẫn")
+        BotCommand("start", "Bắt đầu tu luyện"),
+        BotCommand("chapter", "Dò xét chương truyện"),
+        BotCommand("3d", "Dò xét Tiên Nghịch 3D"),
+        BotCommand("2d", "Dò xét Tiên Nghịch 2D"),
+        BotCommand("contribute", "Cống hiến hương hỏa"),
+        BotCommand("list", "Danh mục Tàng Kinh Các"),
+        BotCommand("help", "Bí kíp sử dụng")
     ]
     await application.bot.set_my_commands(commands)
     logger.info("✅ Bot commands menu set successfully")

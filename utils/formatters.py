@@ -10,7 +10,7 @@ from utils.constants import *
 def format_links(links: List[Link]) -> str:
     """Format links for display"""
     if not links:
-        return "  Chưa có link"
+        return "  Chưa tìm thấy ngọc giản"
     
     result = []
     for link in links:
@@ -26,14 +26,14 @@ def format_novel_info(novel: Novel) -> str:
     result = [
         f"{EMOJI_BOOK} **Chương {novel.chapter_number}**{title}",
         "",
-        f"{EMOJI_LINK} **Link đọc:**"
+        f"{EMOJI_LINK} **Ngọc giản (Link đọc):**"
     ]
     
     if novel.links:
         for link in novel.links:
             result.append(f"  • [{link.source_name}]({link.url})")
     else:
-        result.append("  Chưa có link")
+        result.append("  Chưa tìm thấy ngọc giản")
     
     return "\n".join(result)
 
@@ -45,14 +45,14 @@ def format_episode_3d_info(episode: Episode) -> str:
     result = [
         f"{EMOJI_FILM_3D} **Tiên Nghịch 3D - Tập {episode.episode_number}**{title}",
         "",
-        f"{EMOJI_LINK} **Link xem:**"
+        f"{EMOJI_LINK} **Lưu ảnh (Link xem):**"
     ]
     
     if episode.links:
         for link in episode.links:
             result.append(f"  • [{link.source_name}]({link.url})")
     else:
-        result.append("  Chưa có link")
+        result.append("  Chưa tìm thấy lưu ảnh")
     
     return "\n".join(result)
 
@@ -64,14 +64,14 @@ def format_episode_2d_info(episode: Episode) -> str:
     result = [
         f"{EMOJI_FILM_2D} **Tiên Nghịch 2D - Tập {episode.episode_number}**{title}",
         "",
-        f"{EMOJI_LINK} **Link xem:**"
+        f"{EMOJI_LINK} **Lưu ảnh (Link xem):**"
     ]
     
     if episode.links:
         for link in episode.links:
             result.append(f"  • [{link.source_name}]({link.url})")
     else:
-        result.append("  Chưa có link")
+        result.append("  Chưa tìm thấy lưu ảnh")
     
     return "\n".join(result)
 
@@ -99,11 +99,11 @@ def format_search_result(
     
     # Header
     if search_type == SEARCH_TYPE_CHAPTER:
-        result.append(f"{EMOJI_SEARCH} **Kết quả tra cứu: Chương {search_value}**")
+        result.append(f"{EMOJI_SEARCH} **Kết quả dò xét: Chương {search_value}**")
     elif search_type == SEARCH_TYPE_3D:
-        result.append(f"{EMOJI_SEARCH} **Kết quả tra cứu: Tiên Nghịch 3D - Tập {search_value}**")
+        result.append(f"{EMOJI_SEARCH} **Kết quả dò xét: Tiên Nghịch 3D - Tập {search_value}**")
     elif search_type == SEARCH_TYPE_2D:
-        result.append(f"{EMOJI_SEARCH} **Kết quả tra cứu: Tiên Nghịch 2D - Tập {search_value}**")
+        result.append(f"{EMOJI_SEARCH} **Kết quả dò xét: Tiên Nghịch 2D - Tập {search_value}**")
     
     result.append("")
     result.append("─" * 30)
@@ -117,11 +117,11 @@ def format_search_result(
             title = f" - {episode.title}" if episode.title else ""
             result.append(f"**Tập {episode.episode_number}**{title}")
             if episode.links:
-                result.append(f"{EMOJI_LINK} Link xem:")
+                result.append(f"{EMOJI_LINK} Lưu ảnh (Link xem):")
                 for link in episode.links:
                     result.append(f"  • [{link.source_name}]({link.url})")
             else:
-                result.append("  • Chưa có link")
+                result.append("  • Chưa tìm thấy lưu ảnh")
             result.append("")
     
     # 2D episodes
@@ -132,11 +132,11 @@ def format_search_result(
             title = f" - {episode.title}" if episode.title else ""
             result.append(f"**Tập {episode.episode_number}**{title}")
             if episode.links:
-                result.append(f"{EMOJI_LINK} Link xem:")
+                result.append(f"{EMOJI_LINK} Lưu ảnh (Link xem):")
                 for link in episode.links:
                     result.append(f"  • [{link.source_name}]({link.url})")
             else:
-                result.append("  • Chưa có link")
+                result.append("  • Chưa tìm thấy lưu ảnh")
             result.append("")
 
     # Novel chapters
@@ -147,18 +147,18 @@ def format_search_result(
             title = f" - {novel.title}" if novel.title else ""
             result.append(f"**Chương {novel.chapter_number}**{title}")
             if novel.links:
-                result.append(f"{EMOJI_LINK} Link đọc:")
+                result.append(f"{EMOJI_LINK} Ngọc giản (Link đọc):")
                 for link in novel.links:
                     result.append(f"  • [{link.source_name}]({link.url})")
             else:
-                result.append("  • Chưa có link")
+                result.append("  • Chưa tìm thấy ngọc giản")
             result.append("")
     
     # If no results
     if not novels and not episodes_3d and not episodes_2d:
-        result.append(f"{EMOJI_INFO} Không tìm thấy thông tin")
+        result.append(f"{EMOJI_INFO} Thần thức không tìm thấy manh mối nào")
         result.append("")
-        result.append("Bạn có thể đóng góp thông tin bằng lệnh /contribute")
+        result.append("Đạo hữu có thể đóng góp manh mối bằng lệnh /contribute")
     
     return "\n".join(result)
 

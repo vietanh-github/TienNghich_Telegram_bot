@@ -17,10 +17,10 @@ def validate_chapter_number(chapter_str: str) -> Tuple[bool, Optional[int], str]
         if chapter_num <= 0:
             return False, None, "Số chương phải lớn hơn 0"
         if chapter_num > 10000:
-            return False, None, "Số chương không hợp lệ (quá lớn)"
+            return False, None, "Số chương quá lớn, chưa có điển tịch nào ghi lại"
         return True, chapter_num, ""
     except ValueError:
-        return False, None, "Vui lòng nhập số chương hợp lệ"
+        return False, None, "Số chương không hợp lệ, xin đạo hữu kiểm tra lại"
 
 
 def validate_episode_number(episode_str: str) -> Tuple[bool, Optional[int], str]:
@@ -35,10 +35,10 @@ def validate_episode_number(episode_str: str) -> Tuple[bool, Optional[int], str]
         if episode_num <= 0:
             return False, None, "Số tập phải lớn hơn 0"
         if episode_num > 10000:
-            return False, None, "Số tập không hợp lệ (quá lớn)"
+            return False, None, "Số tập quá lớn, chưa có lưu ảnh nào ghi lại"
         return True, episode_num, ""
     except ValueError:
-        return False, None, "Vui lòng nhập số tập hợp lệ"
+        return False, None, "Số tập không hợp lệ, xin đạo hữu kiểm tra lại"
 
 
 def validate_url(url: str) -> Tuple[bool, str]:
@@ -51,10 +51,10 @@ def validate_url(url: str) -> Tuple[bool, str]:
     url = url.strip()
     
     if not url:
-        return False, "URL không được để trống"
+        return False, "Đường dẫn không được để trống"
     
     if not validators.url(url):
-        return False, "URL không hợp lệ. Vui lòng nhập URL đầy đủ (bắt đầu bằng http:// hoặc https://)"
+        return False, "Đường dẫn không hợp lệ. Xin nhập đầy đủ (bắt đầu bằng http:// hoặc https://)"
     
     return True, ""
 
@@ -69,13 +69,13 @@ def validate_source_name(source_name: str) -> Tuple[bool, str]:
     source_name = source_name.strip()
     
     if not source_name:
-        return False, "Tên website không được để trống"
+        return False, "Tên tiên môn/động phủ không được để trống"
     
     if len(source_name) < 2:
-        return False, "Tên website phải có ít nhất 2 ký tự"
+        return False, "Tên quá ngắn, phải có ít nhất 2 ký tự"
     
     if len(source_name) > 50:
-        return False, "Tên website không được vượt quá 50 ký tự"
+        return False, "Tên quá dài, không được vượt quá 50 ký tự"
     
     return True, ""
 
@@ -151,6 +151,6 @@ def validate_title(title: str) -> Tuple[bool, str]:
     title = title.strip()
     
     if len(title) > 200:
-        return False, "Tiêu đề không được vượt quá 200 ký tự"
+        return False, "Tiêu đề quá dài, không được vượt quá 200 ký tự"
     
     return True, ""

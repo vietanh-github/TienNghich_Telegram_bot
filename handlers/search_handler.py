@@ -43,7 +43,7 @@ async def handle_search_callback(update: Update, context: ContextTypes.DEFAULT_T
              await perform_search_2d(update, context, search_value, is_callback=True)
              
     except ValueError:
-        await query.answer("Lỗi dữ liệu")
+        await query.answer("Tâm ma quấy nhiễu (Lỗi dữ liệu)")
 
 
 # REFACTORED COMMANDS TO USE SHARED LOGIC
@@ -51,7 +51,7 @@ async def handle_search_callback(update: Update, context: ContextTypes.DEFAULT_T
 async def search_chapter_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     """Handle /chapter command"""
     if not context.args or len(context.args) == 0:
-        await update.message.reply_text(f"{EMOJI_INFO} Vui lòng cung cấp số chương. Ví dụ: `/chapter 123`", parse_mode='Markdown')
+        await update.message.reply_text(f"{EMOJI_INFO} Xin đạo hữu cho biết số chương. Ví dụ: `/chapter 123`", parse_mode='Markdown')
         return
     
     chapter_str = context.args[0]
@@ -67,7 +67,7 @@ async def search_chapter_command(update: Update, context: ContextTypes.DEFAULT_T
 async def search_3d_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     """Handle /3d command"""
     if not context.args or len(context.args) == 0:
-        await update.message.reply_text(f"{EMOJI_INFO} Vui lòng cung cấp số tập. Ví dụ: `/3d 10`", parse_mode='Markdown')
+        await update.message.reply_text(f"{EMOJI_INFO} Xin đạo hữu cho biết số tập. Ví dụ: `/3d 10`", parse_mode='Markdown')
         return
     
     episode_str = context.args[0]
@@ -83,7 +83,7 @@ async def search_3d_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
 async def search_2d_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     """Handle /2d command"""
     if not context.args or len(context.args) == 0:
-        await update.message.reply_text(f"{EMOJI_INFO} Vui lòng cung cấp số tập. Ví dụ: `/2d 5`", parse_mode='Markdown')
+        await update.message.reply_text(f"{EMOJI_INFO} Xin đạo hữu cho biết số tập. Ví dụ: `/2d 5`", parse_mode='Markdown')
         return
     
     episode_str = context.args[0]
@@ -124,11 +124,11 @@ async def show_list_page(update: Update, context: ContextTypes.DEFAULT_TYPE, pag
     
     if not items and page > 0:
         if is_callback:
-            await update.callback_query.answer("Hết danh sách")
+            await update.callback_query.answer("Đã hết ngọc giản")
         return
         
     if not items and page == 0:
-         msg = f"{EMOJI_INFO} Chưa có dữ liệu đóng góp nào."
+         msg = f"{EMOJI_INFO} Tàng Kinh Các hiện còn trống, chưa có ngọc giản nào."
          if is_callback:
              await update.callback_query.edit_message_text(msg)
          else:
@@ -136,7 +136,7 @@ async def show_list_page(update: Update, context: ContextTypes.DEFAULT_TYPE, pag
          return
 
     # Format list
-    text = f"{EMOJI_BOOK} **DANH SÁCH TẬP PHIM & CHƯƠNG TRUYỆN**\n"
+    text = f"{EMOJI_BOOK} **DANH MỤC TÀNG KINH CÁC**\n"
     text += f"(Trang {page + 1})\n\n"
     
     for item in items:
@@ -179,7 +179,7 @@ async def show_list_page(update: Update, context: ContextTypes.DEFAULT_TYPE, pag
         
         text += f"🎬 3D: {txt_3d} | 📺 2D: {txt_2d} | 📖: {txt_chap}\n"
         
-    text += f"\n_Chọn link để xem/đọc_"
+    text += f"\n_Chọn ngọc giản để xem/đọc_"
     
     # Pagination
     keyboard = []
@@ -243,7 +243,7 @@ async def perform_search_chapter(update: Update, context: ContextTypes.DEFAULT_T
         keyboard.append(row2)
         
         if not result["novels"] and not result["episodes_3d"] and not result["episodes_2d"]:
-            keyboard.append([InlineKeyboardButton("➕ Đóng góp ngay", callback_data="contribute")])
+            keyboard.append([InlineKeyboardButton("➕ Cống hiến ngay", callback_data="contribute")])
             
         reply_markup = InlineKeyboardMarkup(keyboard)
         
@@ -259,7 +259,7 @@ async def perform_search_chapter(update: Update, context: ContextTypes.DEFAULT_T
             
     except Exception as e:
         print(f"Error search chapter: {e}")
-        if is_callback: await update.callback_query.answer("Lỗi tra cứu")
+        if is_callback: await update.callback_query.answer("Tẩu hỏa nhập ma (Lỗi tra cứu)")
 
 
 async def perform_search_3d(update: Update, context: ContextTypes.DEFAULT_TYPE, episode_num: int, is_callback: bool):
@@ -287,7 +287,7 @@ async def perform_search_3d(update: Update, context: ContextTypes.DEFAULT_TYPE, 
         keyboard.append(row2)
         
         if not result["novels"] and not result["episodes_3d"] and not result["episodes_2d"]:
-            keyboard.append([InlineKeyboardButton("➕ Đóng góp ngay", callback_data="contribute")])
+            keyboard.append([InlineKeyboardButton("➕ Cống hiến ngay", callback_data="contribute")])
             
         reply_markup = InlineKeyboardMarkup(keyboard)
         
@@ -301,7 +301,7 @@ async def perform_search_3d(update: Update, context: ContextTypes.DEFAULT_TYPE, 
             
     except Exception as e:
         print(f"Error search 3d: {e}")
-        if is_callback: await update.callback_query.answer("Lỗi tra cứu")
+        if is_callback: await update.callback_query.answer("Tẩu hỏa nhập ma (Lỗi tra cứu)")
 
 
 async def perform_search_2d(update: Update, context: ContextTypes.DEFAULT_TYPE, episode_num: int, is_callback: bool):
@@ -329,7 +329,7 @@ async def perform_search_2d(update: Update, context: ContextTypes.DEFAULT_TYPE, 
         keyboard.append(row2)
         
         if not result["novels"] and not result["episodes_3d"] and not result["episodes_2d"]:
-            keyboard.append([InlineKeyboardButton("➕ Đóng góp ngay", callback_data="contribute")])
+            keyboard.append([InlineKeyboardButton("➕ Cống hiến ngay", callback_data="contribute")])
             
         reply_markup = InlineKeyboardMarkup(keyboard)
         
@@ -343,4 +343,4 @@ async def perform_search_2d(update: Update, context: ContextTypes.DEFAULT_TYPE, 
             
     except Exception as e:
         print(f"Error search 2d: {e}")
-        if is_callback: await update.callback_query.answer("Lỗi tra cứu")
+        if is_callback: await update.callback_query.answer("Tẩu hỏa nhập ma (Lỗi tra cứu)")

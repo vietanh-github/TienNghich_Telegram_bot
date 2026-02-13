@@ -27,13 +27,13 @@ contribution_service = ContributionService()
 async def contribute_start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     """Start contribution conversation"""
     keyboard = [
-        [InlineKeyboardButton("🔗 Mapping (Chương - Tập)", callback_data="contrib_mapping")],
-        [InlineKeyboardButton("📖 Link đọc truyện", callback_data="contrib_novel")],
+        [InlineKeyboardButton("🔗 Mối liên kết (Mapping)", callback_data="contrib_mapping")],
+        [InlineKeyboardButton("📖 Ngọc giản (Tiểu thuyết)", callback_data="contrib_novel")],
         [
-            InlineKeyboardButton("🎬 Link 3D", callback_data="contrib_3d"),
-            InlineKeyboardButton("📺 Link 2D", callback_data="contrib_2d")
+            InlineKeyboardButton("🎬 Lưu ảnh 3D", callback_data="contrib_3d"),
+            InlineKeyboardButton("📺 Lưu ảnh 2D", callback_data="contrib_2d")
         ],
-        [InlineKeyboardButton("❌ Hủy", callback_data="contrib_cancel")]
+        [InlineKeyboardButton("❌ Hủy bỏ", callback_data="contrib_cancel")]
     ]
     
     reply_markup = InlineKeyboardMarkup(keyboard)
@@ -42,15 +42,15 @@ async def contribute_start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if update.callback_query:
         await update.callback_query.answer()
         await update.callback_query.edit_message_text(
-            f"{EMOJI_CONTRIBUTE} **ĐÓNG GÓP THÔNG TIN**\n\n"
-            f"Bạn muốn đóng góp loại thông tin nào?",
+            f"{EMOJI_CONTRIBUTE} **CỐNG HIẾN HƯƠNG HỎA**\n\n"
+            f"Đạo hữu muốn cống hiến vật phẩm gì?",
             reply_markup=reply_markup,
             parse_mode='Markdown'
         )
     else:
         await update.message.reply_text(
-            f"{EMOJI_CONTRIBUTE} **ĐÓNG GÓP THÔNG TIN**\n\n"
-            f"Bạn muốn đóng góp loại thông tin nào?",
+            f"{EMOJI_CONTRIBUTE} **CỐNG HIẾN HƯƠNG HỎA**\n\n"
+            f"Đạo hữu muốn cống hiến vật phẩm gì?",
             reply_markup=reply_markup,
             parse_mode='Markdown'
         )
@@ -65,7 +65,7 @@ async def choose_contribution_type(update: Update, context: ContextTypes.DEFAULT
     choice = query.data
     
     if choice == "contrib_cancel":
-        await query.edit_message_text(f"{EMOJI_INFO} Đã hủy đóng góp.")
+        await query.edit_message_text(f"{EMOJI_INFO} Đã dừng việc cống hiến.")
         context.user_data.clear()
         return ConversationHandler.END
     
@@ -76,9 +76,9 @@ async def choose_contribution_type(update: Update, context: ContextTypes.DEFAULT
         reply_markup = ReplyKeyboardMarkup(keyboard, one_time_keyboard=True, resize_keyboard=True)
 
         await query.message.reply_text( # use message.reply_text because we need a ReplyKeyboard
-            f"{EMOJI_FILM_3D} **MAPPING: LIÊN KẾT CHƯƠNG - TẬP PHIM**\n\n"
-            f"Nhập số tập 3D muốn đóng góp:\n\n"
-            f"Hoặc chọn 'Bỏ qua' nếu không có tập 3D.",
+            f"{EMOJI_FILM_3D} **THIẾT LẬP MỐI LIÊN KẾT**\n\n"
+            f"Xin nhập số tập 3D muốn cống hiến:\n\n"
+            f"Hoặc chọn 'Bỏ qua' nếu chưa có manh mối.",
             parse_mode='Markdown',
             reply_markup=reply_markup
         )
@@ -100,10 +100,10 @@ async def choose_contribution_type(update: Update, context: ContextTypes.DEFAULT
         context.user_data['contribution_type'] = 'novel_link'
         context.user_data['target_type'] = TARGET_TYPE_NOVEL
         await query.edit_message_text(
-            f"{EMOJI_BOOK} **LINK ĐỌC TRUYỆN**\n\n"
-            f"Nhập số chương muốn thêm link:\n\n"
+            f"{EMOJI_BOOK} **CỐNG HIẾN NGỌC GIẢN (Novel)**\n\n"
+            f"Xin nhập số chương muốn thêm ngọc giản:\n\n"
             f"Ví dụ: `123`\n\n"
-            f"Gửi `/cancel` để hủy.",
+            f"Gửi `/cancel` để hủy bỏ.",
             parse_mode='Markdown'
         )
         return LINK_NUMBER
@@ -112,10 +112,10 @@ async def choose_contribution_type(update: Update, context: ContextTypes.DEFAULT
         context.user_data['contribution_type'] = '3d_link'
         context.user_data['target_type'] = TARGET_TYPE_EPISODE_3D
         await query.edit_message_text(
-            f"{EMOJI_FILM_3D} **LINK XEM PHIM 3D**\n\n"
-            f"Nhập số tập 3D muốn thêm link:\n\n"
+            f"{EMOJI_FILM_3D} **CỐNG HIẾN LƯU ẢNH 3D**\n\n"
+            f"Xin nhập số tập 3D muốn thêm lưu ảnh:\n\n"
             f"Ví dụ: `10`\n\n"
-            f"Gửi `/cancel` để hủy.",
+            f"Gửi `/cancel` để hủy bỏ.",
             parse_mode='Markdown'
         )
         return LINK_NUMBER
@@ -124,17 +124,17 @@ async def choose_contribution_type(update: Update, context: ContextTypes.DEFAULT
         context.user_data['contribution_type'] = '2d_link'
         context.user_data['target_type'] = TARGET_TYPE_EPISODE_2D
         await query.edit_message_text(
-            f"{EMOJI_FILM_2D} **LINK XEM PHIM 2D**\n\n"
-            f"Nhập số tập 2D muốn thêm link:\n\n"
+            f"{EMOJI_FILM_2D} **CỐNG HIẾN LƯU ẢNH 2D**\n\n"
+            f"Xin nhập số tập 2D muốn thêm lưu ảnh:\n\n"
             f"Ví dụ: `5`\n\n"
-            f"Gửi `/cancel` để hủy.",
+            f"Gửi `/cancel` để hủy bỏ.",
             parse_mode='Markdown'
         )
         return LINK_NUMBER
     
     else:
         await query.edit_message_text(
-            f"{EMOJI_CROSS} Lựa chọn không hợp lệ."
+            f"{EMOJI_CROSS} Lựa chọn không hợp đạo."
         )
         return ConversationHandler.END
 
@@ -166,11 +166,11 @@ async def mapping_get_3d(update: Update, context: ContextTypes.DEFAULT_TYPE):
     reply_markup = ReplyKeyboardMarkup(keyboard, one_time_keyboard=True, resize_keyboard=True)
     
     await update.message.reply_text(
-        f"{EMOJI_BOOK} Nhập các chương truyện tương ứng (nếu có):\n\n"
+        f"{EMOJI_BOOK} Xin nhập các chương truyện tương ứng (nếu có):\n\n"
         f"*Cách nhập:*\n"
         f"• Nhiều chương: `121, 122, 123`\n"
         f"• Hoặc range: `121-123`\n\n"
-        f"Chọn 'Bỏ qua' nếu không muốn nhập chương.",
+        f"Chọn 'Bỏ qua' nếu chưa có manh mối.",
         parse_mode='Markdown',
         reply_markup=reply_markup
     )
@@ -204,8 +204,8 @@ async def mapping_get_chapters(update: Update, context: ContextTypes.DEFAULT_TYP
     reply_markup = ReplyKeyboardMarkup(keyboard, one_time_keyboard=True, resize_keyboard=True)
     
     await update.message.reply_text(
-        f"{EMOJI_FILM_2D} Nhập số tập 2D tương ứng:\n\n"
-        f"Hoặc chọn 'Bỏ qua' nếu không có tập 2D.",
+        f"{EMOJI_FILM_2D} Xin nhập số tập 2D tương ứng:\n\n"
+        f"Hoặc chọn 'Bỏ qua' nếu chưa có manh mối.",
         reply_markup=reply_markup
     )
     
@@ -227,7 +227,7 @@ async def mapping_get_2d(update: Update, context: ContextTypes.DEFAULT_TYPE):
         
         if not is_valid:
             await update.message.reply_text(
-                f"{EMOJI_CROSS} {error_msg}\n\nVui lòng nhập lại số tập 2D:"
+                f"{EMOJI_CROSS} {error_msg}\n\nXin đạo hữu nhập lại số tập 2D:"
             )
             return MAPPING_EP_2D
         
@@ -239,13 +239,13 @@ async def mapping_get_2d(update: Update, context: ContextTypes.DEFAULT_TYPE):
     chapters = context.user_data.get('chapters', [])
 
     if not episode_3d and not episode_2d:
-         await update.message.reply_text(
-            f"{EMOJI_CROSS} Lỗi: Phải có ít nhất một tập phim (3D hoặc 2D).\n"
-            f"Vui lòng đóng góp lại.",
+        await update.message.reply_text(
+            f"{EMOJI_CROSS} Tâm ma: Phải có ít nhất một tập phim (3D hoặc 2D).\n"
+            f"Xin đạo hữu cống hiến lại.",
             reply_markup=ReplyKeyboardRemove()
         )
-         context.user_data.clear()
-         return ConversationHandler.END
+        context.user_data.clear()
+        return ConversationHandler.END
 
     # Submit contribution
     user = update.effective_user
@@ -290,7 +290,7 @@ async def link_get_number(update: Update, context: ContextTypes.DEFAULT_TYPE):
     
     if not is_valid:
         await update.message.reply_text(
-            f"{EMOJI_CROSS} {error_msg}\n\nVui lòng nhập lại:"
+            f"{EMOJI_CROSS} {error_msg}\n\nXin đạo hữu nhập lại:"
         )
         return LINK_NUMBER
     
@@ -300,7 +300,7 @@ async def link_get_number(update: Update, context: ContextTypes.DEFAULT_TYPE):
     reply_markup = ReplyKeyboardMarkup(keyboard, one_time_keyboard=True, resize_keyboard=True)
     
     await update.message.reply_text(
-        f"{EMOJI_LINK} Nhập tên website:\n\n"
+        f"{EMOJI_LINK} Tên tiên môn/động phủ (Website):\n\n"
         f"Ví dụ: `TruyenFull`, `YouTube`, `Bilibili`",
         reply_markup=reply_markup,
         parse_mode='Markdown'
@@ -315,7 +315,7 @@ async def link_get_source(update: Update, context: ContextTypes.DEFAULT_TYPE):
     
     if text == "Hủy":
         await update.message.reply_text(
-            f"{EMOJI_INFO} Đã hủy đóng góp.",
+            f"{EMOJI_INFO} Đã dừng việc cống hiến.",
             reply_markup=ReplyKeyboardRemove()
         )
         return ConversationHandler.END
@@ -324,14 +324,14 @@ async def link_get_source(update: Update, context: ContextTypes.DEFAULT_TYPE):
     
     if not is_valid:
         await update.message.reply_text(
-            f"{EMOJI_CROSS} {error_msg}\n\nVui lòng nhập lại:"
+            f"{EMOJI_CROSS} {error_msg}\n\nXin đạo hữu nhập lại:"
         )
         return LINK_SOURCE
     
     context.user_data['source_name'] = text
     
     await update.message.reply_text(
-        f"{EMOJI_LINK} Nhập URL (link đầy đủ):\n\n"
+        f"{EMOJI_LINK} Đường dẫn ngọc giản (URL):\n\n"
         f"Ví dụ: `https://truyenfull.vn/...`",
         reply_markup=ReplyKeyboardRemove(),
         parse_mode='Markdown'
@@ -388,7 +388,7 @@ async def cancel_contribution(update: Update, context: ContextTypes.DEFAULT_TYPE
     context.user_data.clear()
     
     await update.message.reply_text(
-        f"{EMOJI_INFO} Đã hủy đóng góp.",
+        f"{EMOJI_INFO} Đã dừng việc cống hiến.",
         reply_markup=ReplyKeyboardRemove()
     )
     

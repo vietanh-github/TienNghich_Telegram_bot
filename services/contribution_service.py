@@ -59,9 +59,9 @@ class ContributionService:
             result = self.contribution_repo.create(contribution)
             
             if result:
-                return True, "Đóng góp của bạn đã được gửi và đang chờ admin duyệt!", result
+                return True, "Cống hiến của đạo hữu đã được gửi và đang chờ chưởng môn thẩm định!", result
             else:
-                return False, "Lỗi khi lưu đóng góp. Vui lòng thử lại sau.", None
+                return False, "Có lỗi khi lưu cống hiến. Xin đạo hữu thử lại sau.", None
                 
         except Exception as e:
             print(f"Error submitting mapping contribution: {e}")
@@ -91,7 +91,7 @@ class ContributionService:
             elif target_type == TARGET_TYPE_EPISODE_2D:
                 contribution_type = CONTRIBUTION_TYPE_EPISODE_2D_LINK
             else:
-                return False, "Loại đóng góp không hợp lệ", None
+                return False, "Loại cống hiến không hợp lệ", None
             
             # Create contribution
             contribution = Contribution(
@@ -112,9 +112,9 @@ class ContributionService:
             result = self.contribution_repo.create(contribution)
             
             if result:
-                return True, "Đóng góp link của bạn đã được gửi và đang chờ admin duyệt!", result
+                return True, "Ngọc giản cống hiến của đạo hữu đã được gửi và đang chờ chưởng môn thẩm định!", result
             else:
-                return False, "Lỗi khi lưu đóng góp. Vui lòng thử lại sau.", None
+                return False, "Có lỗi khi lưu cống hiến. Xin đạo hữu thử lại sau.", None
                 
         except Exception as e:
             print(f"Error submitting link contribution: {e}")
@@ -152,10 +152,10 @@ class ContributionService:
             contribution = self.contribution_repo.find_by_id(contribution_id)
             
             if not contribution:
-                return False, "Không tìm thấy đóng góp"
+                return False, "Không tìm thấy manh mối cống hiến"
             
             if contribution.status != STATUS_PENDING:
-                return False, f"Đóng góp này đã được xử lý ({contribution.status})"
+                return False, f"Cống hiến này đã được xử lý ({contribution.status})"
             
             # Apply the contribution based on type
             success = False
@@ -185,9 +185,9 @@ class ContributionService:
                 except Exception as e:
                     print(f"Error awarding EXP: {e}")
                     
-                return True, "Đóng góp đã được duyệt, áp dụng thành công và cộng 1 EXP!"
+                return True, "Cống hiến đã được duyệt, áp dụng thành công và cộng 1 điểm công đức (EXP)!"
             else:
-                return False, "Lỗi khi áp dụng đóng góp"
+                return False, "Lỗi khi áp dụng cống hiến"
                 
         except Exception as e:
             print(f"Error approving contribution: {e}")
@@ -209,14 +209,14 @@ class ContributionService:
             contribution = self.contribution_repo.find_by_id(contribution_id)
             
             if not contribution:
-                return False, "Không tìm thấy đóng góp"
+                return False, "Không tìm thấy manh mối cống hiến"
             
             if contribution.status != STATUS_PENDING:
-                return False, f"Đóng góp này đã được xử lý ({contribution.status})"
+                return False, f"Cống hiến này đã được xử lý ({contribution.status})"
             
             # Mark as rejected
             self.contribution_repo.reject(contribution_id, admin_id, note)
-            return True, "Đóng góp đã bị từ chối"
+            return True, "Cống hiến đã bị từ chối"
             
         except Exception as e:
             print(f"Error rejecting contribution: {e}")

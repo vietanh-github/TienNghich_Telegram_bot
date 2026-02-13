@@ -19,43 +19,43 @@ async def start_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
         user_service.track_user(user)
     
     welcome_message = rf"""
-Xin chào {user.mention_markdown_v2()}\! 👋
+Kính chào đạo hữu {user.mention_markdown_v2()}\! 👋
 
-Chào mừng đến với **Bot Tiên Nghịch** \- nơi tra cứu thông tin về tác phẩm Tiên Nghịch \(Nhĩ Căn\)
+Chào mừng đạo hữu đến với **Tàng Kinh Các Tiên Nghịch** \- nơi lưu trữ ngọc giản và lưu ảnh về thế giới Tiên Nghịch
 
-{EMOJI_BOOK} **Chức năng chính:**
+{EMOJI_BOOK} **Các pháp môn chính:**
 
-*Tra cứu thông tin:*
-• `/chapter <số>` \- Tra cứu theo chương tiểu thuyết
-• `/3d <số>` \- Tra cứu theo tập phim 3D
-• `/2d <số>` \- Tra cứu theo tập phim 2D
+*Dò xét thông tin:*
+• `/chapter <số>` \- Tìm kiếm theo chương tiểu thuyết
+• `/3d <số>` \- Tìm kiếm theo tập phim 3D
+• `/2d <số>` \- Tìm kiếm theo tập phim 2D
 
-*Đóng góp thông tin:*
-• `/contribute` \- Đóng góp mapping hoặc link
+*Cống hiến tông môn:*
+• `/contribute` \- Đóng góp manh mối hoặc ngọc giản
 
-*Khác:*
-• `/help` \- Xem hướng dẫn chi tiết
+*Pháp bảo khác:*
+• `/help` \- Xem bí kíp hướng dẫn
 
 {EMOJI_INFO} **Ví dụ:**
-`/chapter 123` \- Tra chương 123
-`/3d 10` \- Tra tập 3D số 10
-`/2d 5` \- Tra tập 2D số 5
+`/chapter 123` \- Tìm chương 123
+`/3d 10` \- Tìm tập 3D số 10
+`/2d 5` \- Tìm tập 2D số 5
 
-Hãy bắt đầu khám phá\! 🚀
+Hãy bắt đầu con đường tu luyện\! 🚀
 """
     
     # Create inline keyboard
     keyboard = [
         [
-            InlineKeyboardButton("📖 Tra chương", callback_data="mode_chapter"),
-            InlineKeyboardButton("🎬 Tra 3D", callback_data="mode_3d")
+            InlineKeyboardButton("📖 Tìm chương", callback_data="mode_chapter"),
+            InlineKeyboardButton("🎬 Tìm 3D", callback_data="mode_3d")
         ],
         [
-            InlineKeyboardButton("📺 Tra 2D", callback_data="mode_2d"),
-            InlineKeyboardButton("➕ Đóng góp", callback_data="contribute")
+            InlineKeyboardButton("📺 Tìm 2D", callback_data="mode_2d"),
+            InlineKeyboardButton("➕ Cống hiến", callback_data="contribute")
         ],
         [
-            InlineKeyboardButton("ℹ️ Hướng dẫn", callback_data="help_main")
+            InlineKeyboardButton("ℹ️ Bí kíp", callback_data="help_main")
         ]
     ]
     
@@ -77,8 +77,8 @@ async def handle_start_callback(update: Update, context: ContextTypes.DEFAULT_TY
     if data == "mode_chapter":
         context.user_data['search_mode'] = 'chapter'
         await query.edit_message_text(
-            f"{EMOJI_BOOK} **TRA CỨU TIỂU THUYẾT**\n\n"
-            f"Vui lòng nhập số chương bạn muốn tìm:\n"
+            f"{EMOJI_BOOK} **DÒ XÉT TIỂU THUYẾT**\n\n"
+            f"Vui lòng nhập số chương đạo hữu muốn tìm:\n"
             f"Ví dụ: `123`",
             parse_mode='Markdown'
         )
@@ -86,8 +86,8 @@ async def handle_start_callback(update: Update, context: ContextTypes.DEFAULT_TY
     elif data == "mode_3d":
         context.user_data['search_mode'] = '3d'
         await query.edit_message_text(
-            f"{EMOJI_FILM_3D} **TRA CỨU PHIM 3D**\n\n"
-            f"Vui lòng nhập số tập bạn muốn tìm:\n"
+            f"{EMOJI_FILM_3D} **DÒ XÉT PHIM 3D**\n\n"
+            f"Vui lòng nhập số tập đạo hữu muốn tìm:\n"
             f"Ví dụ: `10`",
             parse_mode='Markdown'
         )
@@ -95,8 +95,8 @@ async def handle_start_callback(update: Update, context: ContextTypes.DEFAULT_TY
     elif data == "mode_2d":
         context.user_data['search_mode'] = '2d'
         await query.edit_message_text(
-            f"{EMOJI_FILM_2D} **TRA CỨU PHIM 2D**\n\n"
-            f"Vui lòng nhập số tập bạn muốn tìm:\n"
+            f"{EMOJI_FILM_2D} **DÒ XÉT PHIM 2D**\n\n"
+            f"Vui lòng nhập số tập đạo hữu muốn tìm:\n"
             f"Ví dụ: `5`",
             parse_mode='Markdown'
         )
@@ -105,22 +105,22 @@ async def handle_start_callback(update: Update, context: ContextTypes.DEFAULT_TY
 async def help_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     """Handle /help command"""
     text = f"""
-{EMOJI_INFO} **HƯỚNG DẪN SỬ DỤNG BOT TIÊN NGHỊCH**
+{EMOJI_INFO} **BÍ KÍP SỬ DỤNG TÀNG KINH CÁC**
 
-Chào mừng bạn đến với Bot Tiên Nghịch! Dưới đây là các chức năng chính:
+Chào mừng đạo hữu đến với Tàng Kinh Các Tiên Nghịch! Dưới đây là các pháp môn chính:
 
-1️⃣ **Tra cứu:** Tìm kiếm chương truyện, tập phim 3D/2D.
-2️⃣ **Đóng góp:** Thêm mapping hoặc link mới.
-3️⃣ **Liên hệ:** Hỗ trợ từ admin.
+1️⃣ **Dò xét:** Tìm kiếm chương truyện, tập phim 3D/2D.
+2️⃣ **Cống hiến:** Thêm manh mối hoặc ngọc giản mới.
+3️⃣ **Truyền âm:** Liên hệ chưởng môn (admin).
 
 Vui lòng chọn mục bên dưới để xem chi tiết:
 """
     keyboard = [
         [
-            InlineKeyboardButton("🔍 Tra cứu", callback_data="help_search"),
-            InlineKeyboardButton("➕ Đóng góp", callback_data="help_contribute")
+            InlineKeyboardButton("🔍 Dò xét", callback_data="help_search"),
+            InlineKeyboardButton("➕ Cống hiến", callback_data="help_contribute")
         ],
-        [InlineKeyboardButton("📞 Liên hệ", callback_data="help_contact")]
+        [InlineKeyboardButton("📞 Truyền âm", callback_data="help_contact")]
     ]
     reply_markup = InlineKeyboardMarkup(keyboard)
     
@@ -152,39 +152,39 @@ async def handle_help_callback(update: Update, context: ContextTypes.DEFAULT_TYP
     
     if data == "help_search":
         text = f"""
-{EMOJI_SEARCH} **HƯỚNG DẪN TRA CỨU**
+{EMOJI_SEARCH} **BÍ KÍP DÒ XÉT**
 
-*Tra cứu theo chương tiểu thuyết:*
+*Dò xét theo chương tiểu thuyết:*
 `/chapter <số chương>`
 Ví dụ: `/chapter 123`
 
-*Tra cứu theo tập phim 3D:*
+*Dò xét theo tập phim 3D:*
 `/3d <số tập>`
 Ví dụ: `/3d 10`
 
-*Tra cứu theo tập phim 2D:*
+*Dò xét theo tập phim 2D:*
 `/2d <số tập>`
 Ví dụ: `/2d 5`
 
-Bot sẽ hiển thị thông tin mapping và link nếu có.
+Bot sẽ hiển thị manh mối và ngọc giản nếu có.
 """
     elif data == "help_contribute":
         text = f"""
-{EMOJI_CONTRIBUTE} **HƯỚNG DẪN ĐÓNG GÓP**
+{EMOJI_CONTRIBUTE} **BÍ KÍP CỐNG HIẾN**
 
-Sử dụng lệnh `/contribute` hoặc bấm nút **Đóng góp** để bắt đầu.
+Sử dụng lệnh `/contribute` hoặc bấm nút **Cống hiến** để bắt đầu.
 
-Bạn có thể đóng góp:
-• **Mapping:** Liên kết giữa chương truyện và tập phim.
-• **Link:** Thêm link đọc truyện hoặc xem phim.
+Đạo hữu có thể cống hiến:
+• **Mối liên kết:** Liên kết giữa chương truyện và tập phim.
+• **Ngọc giản/Lưu ảnh:** Thêm link đọc truyện hoặc xem phim.
 
-Tất cả đóng góp sẽ được admin kiểm duyệt và bạn sẽ nhận được **1 EXP** cho mỗi đóng góp được duyệt! 🌟
+Tất cả cống hiến sẽ được chưởng môn kiểm duyệt và đạo hữu sẽ nhận được **1 điểm công đức (EXP)** cho mỗi cống hiến được duyệt! 🌟
 """
     elif data == "help_contact":
         text = f"""
-{EMOJI_INFO} **LIÊN HỆ & HỖ TRỢ**
+{EMOJI_INFO} **TRUYỀN ÂM & HỖ TRỢ**
 
-Nếu bạn gặp lỗi hoặc có thắc mắc, vui lòng liên hệ admin.
+Nếu đạo hữu gặp tẩu hỏa nhập ma (lỗi) hoặc có thắc mắc, vui lòng truyền âm cho chưởng môn.
 
 • Bot version: 1.0.0
 • Developed by: Antigravity

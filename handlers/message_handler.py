@@ -60,15 +60,15 @@ async def message_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
         reply_markup = InlineKeyboardMarkup(keyboard)
         
         await update.message.reply_text(
-            f"{EMOJI_INFO} Bạn đang tìm tập {episode_num} phiên bản nào?",
+            f"{EMOJI_INFO} Đạo hữu đang tìm tập {episode_num} phiên bản nào?",
             reply_markup=reply_markup
         )
         return
 
     # Default response for other text
     await update.message.reply_text(
-        f"{EMOJI_INFO} Tôi không hiểu yêu cầu của bạn.\n\n"
-        f"Gửi số để tìm chương/tập phim.\n"
-        f"Bạn có thể chọn chế độ tra cứu từ menu /start.",
+        f"{EMOJI_INFO} Tại hạ không hiểu ý đạo hữu.\n\n"
+        f"Xin hãy gửi số để tìm chương/tập phim.\n"
+        f"Đạo hữu có thể chọn pháp môn dò xét từ /start.",
         parse_mode='Markdown'
     )
